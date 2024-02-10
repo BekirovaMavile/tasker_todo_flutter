@@ -58,7 +58,7 @@ class _ListScreenState extends State<ListScreen> {
                           ],
                         ),
                         Container(
-                          margin: const EdgeInsets.only(left: 40.0), // Отступ слева, чтобы бордер начинался правее
+                          margin: const EdgeInsets.only(left: 40.0),
                           decoration: const BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
