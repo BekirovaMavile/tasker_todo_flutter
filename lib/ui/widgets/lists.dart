@@ -8,6 +8,7 @@ class Lists extends StatelessWidget {
   const Lists({super.key, });
   List<TaskCategory> get categories => ToDoState().categories;
 
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,6 +62,12 @@ class Lists extends StatelessWidget {
   }
 
   int _getTaskCount(TaskCategory category) {
-    return 2;
+    int count = 0;
+    for (Task task in AppData.tasks) {
+      if (task.category == category) {
+        count++;
+      }
+    }
+    return count;
   }
 }
