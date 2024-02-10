@@ -21,70 +21,70 @@ class _ListScreenState extends State<ListScreen> {
     return Scaffold(
       appBar: _appBar(context),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: tasks.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: LightThemeColor.grey,
-                        width: 3,
-                      ),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8),
+          child: Column(
+            children: [
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Column(
                       children: [
-                        Checkbox(
-                          value: tasks[index].isCompleted,
-                          shape: const CircleBorder(),
-                          onChanged: (value) {
-                            setState(() {
-                              tasks[index].isCompleted = value ?? false;
-                            });
-                          },
-                          visualDensity: VisualDensity.adaptivePlatformDensity,
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Row(
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: tasks[index].isCompleted,
+                              shape: const CircleBorder(),
+                              onChanged: (value) {
+                                setState(() {
+                                  tasks[index].isCompleted = value ?? false;
+                                });
+                              },
+                              visualDensity: VisualDensity.adaptivePlatformDensity,
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            Expanded(
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(tasks[index].content, style: AppTextStyle.h2Style),
                                   ColoredDot(category: tasks[index].category),
                                 ],
                               ),
-                            ],
+                            ),
+                          ],
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 40.0), // Отступ слева, чтобы бордер начинался правее
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: LightThemeColor.grey,
+                                width: 3,
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                );
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 50),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Lists", style: AppTextStyle.h3Style,),
-                  const Lists(),
-                ],
+                  );
+                },
               ),
-            ),
-
-          ],
+              Padding(
+                padding: const EdgeInsets.only(left: 50),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Lists", style: AppTextStyle.h3Style,),
+                    const Lists(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       // floatingActionButton: QuickActionMenu(onTap: () {
