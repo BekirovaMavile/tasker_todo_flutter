@@ -1,97 +1,157 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:todo_app_flutter/ui/widgets/quick_action_icon.dart';
 
-class FloatingActionButtons extends StatefulWidget {
-  final Function() open;
-  final Function() close;
-  final Function() onTap;
-  final bool isOpen;
-  final IconData icon;
-  final Color backgroundColor;
-
-  const FloatingActionButtons({
-    super.key,
-    required this.open,
-    required this.close,
-    required this.onTap,
-    required this.isOpen,
-    required this.icon,
-    required this.backgroundColor
-  });
+class FloatingButton extends StatefulWidget {
+  const FloatingButton({super.key});
 
   @override
-  State<FloatingActionButtons> createState() => _FloatingActionButtonsState();
+  State<FloatingButton> createState() => _FloatingButtonState();
 }
 
-class _FloatingActionButtonsState extends State<FloatingActionButtons> {
-  final _duration = const Duration(microseconds: 200);
-  var _isPressed = false;
+class _FloatingButtonState extends State<FloatingButton>
+    with SingleTickerProviderStateMixin {
+  bool toggle = true;
+  late AnimationController _controller;
+  late Animation<double> _opacityAnimation;
+  late Animation<double> _sizeAnimation;
 
-  _pressDown(){
-    setState(() {
-      _isPressed = true;
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 350),
+      reverseDuration: const Duration(milliseconds: 275),
+    );
+
+    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+    _sizeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+
+    _controller.addListener(() {
+      setState(() {});
     });
   }
 
-  _pressUp(){
-    setState(() {
-      _isPressed = false;
-    });
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
+
+  Alignment alignment1 = const Alignment(0.3, -0.4);
+  double size1 = 100.0;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) => _pressDown(),
-      onTapUp: (_) => _pressUp(),
-      onTapCancel: () => _pressUp(),
-      onTap: () => widget.isOpen ? widget.close() : widget.onTap(),
-      onLongPress: () {
-        if(!widget.isOpen) {
-          widget.open();
-          _pressUp();
-        }
-      },
-      child: AnimatedScale(
-        scale: _isPressed || widget.isOpen ? 0.8 : 1,
-        duration: _duration,
-        child: Container(
-          decoration: const BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 2,
-                offset: Offset(0, 2),
-                color: Colors.black26,
-              ),
-            ],
-          ),
-          child: Stack(
-            children: [
-              QuickActionIcon(
-                  icon: Icon(
-                    Icons.close_rounded,
-                    color: widget.backgroundColor,
-                    size: 24,
-                  ),
-                  backgroundColor: Colors.white
-              ),
-              AnimatedOpacity(
-                opacity: widget.isOpen ? 0 : 1,
-                duration: _duration,
-                child: QuickActionIcon(
-                    icon: Icon(
-                      widget.icon,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                    backgroundColor: widget.backgroundColor,
+    return Container(
+      height: 250,
+      width: 250,
+      child: Stack(
+        children: [
+          AnimatedAlign(
+            duration: toggle
+                ? const Duration(milliseconds: 275)
+                : const Duration(milliseconds: 875),
+            alignment: alignment1,
+            curve: toggle ? Curves.easeIn : Curves.elasticOut,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 275),
+              opacity: toggle ? 0.0 : 1.0,
+              child: Container(
+                width: 220,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
                 ),
+                child: _contentButton(),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Transform.rotate(
+              angle: _sizeAnimation.value * pi * (3 / 4),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 375),
+                curve: Curves.easeOut,
+                height: toggle ? 70 : 60,
+                width: toggle ? 70 : 60,
+                decoration: BoxDecoration(
+                  color: toggle ? Colors.white : Colors.blue,
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        if (toggle) {
+                          toggle = !toggle;
+                          _controller.forward();
+                          Future.delayed(const Duration(milliseconds: 10), () {
+                            alignment1 = const Alignment(-0.1, -0.2);
+                          });
+                        } else {
+                          toggle = !toggle;
+                          _controller.reverse();
+                          alignment1 = const Alignment(0.3, -0.4);
+                        }
+                      });
+                    },
+                    icon: Icon(
+                      Icons.add,
+                      size: 27,
+                      color: !toggle ? Colors.white : Colors.blue,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  Widget _contentButton() {
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 18, bottom: 10),
+          child: Row(
+            children: [
+              Icon(Icons.done_outline, color: Color(0xFF006CFF)),
+              SizedBox(width: 8),
+              Text("Task",
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFF006CFF),
+                  ),
               ),
             ],
           ),
         ),
-      ),
+        Divider(),
+        Padding(
+          padding: EdgeInsets.only(left: 18, top: 10),
+          child: Row(
+            children: [
+              Icon(Icons.dns, color: Color(0xFF006CFF)),
+              SizedBox(width: 8),
+              Text("List",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xFF006CFF),
+                  ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
-

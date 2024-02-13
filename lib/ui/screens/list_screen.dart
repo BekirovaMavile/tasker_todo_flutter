@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app_flutter/ui/widgets/floating_action_button.dart';
 import 'package:todo_app_flutter/ui/widgets/lists.dart';
-import 'package:todo_app_flutter/ui/widgets/quick_action_menu.dart';
 import 'package:todo_app_flutter/ui_kit/_ui_kit.dart';
 import '../../data/_data.dart';
 import '../widgets/coloredDot.dart';
@@ -87,22 +87,18 @@ class _ListScreenState extends State<ListScreen> {
           ),
         ),
       ),
-      // floatingActionButton: QuickActionMenu(onTap: () {
-      // },
-      //   icon: Icons.add,
-      //   backgroundColor: Colors.blue,
-      //   child: Container()),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: SizedBox(
-        height: 64,
-        width: 64,
-        child: FloatingActionButton(
-          backgroundColor: Colors.white,
-          onPressed: () {},
-          shape: const CircleBorder(),
-          child: const Icon(Icons.add, color: LightThemeColor.blue,),
-        ),
-      ),
+      floatingActionButton: FloatingButton(),
+      // floatingActionButton: SizedBox(
+      //   height: 64,
+      //   width: 64,
+      //   child: FloatingActionButton(
+      //     backgroundColor: Colors.white,
+      //     onPressed: () {},
+      //     shape: const CircleBorder(),
+      //     child: const Icon(Icons.add, color: LightThemeColor.blue,),
+      //   ),
+      // ),
     );
   }
 
