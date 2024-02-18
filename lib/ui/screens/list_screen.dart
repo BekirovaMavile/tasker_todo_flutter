@@ -88,17 +88,7 @@ class _ListScreenState extends State<ListScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingButton(),
-      // floatingActionButton: SizedBox(
-      //   height: 64,
-      //   width: 64,
-      //   child: FloatingActionButton(
-      //     backgroundColor: Colors.white,
-      //     onPressed: () {},
-      //     shape: const CircleBorder(),
-      //     child: const Icon(Icons.add, color: LightThemeColor.blue,),
-      //   ),
-      // ),
+      floatingActionButton: const FloatingButton(),
     );
   }
 

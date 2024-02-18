@@ -14,7 +14,7 @@ class Lists extends StatelessWidget {
     return Column(
       children: categories.map((category) {
         Color colors = _getCategoryColor(category);
-        String categoryName = _getCategoryName(category);
+        String categoryName = ToDoState().getCategoryName(category);
 
         return Container(
           margin: const EdgeInsets.all(8),
@@ -31,7 +31,7 @@ class Lists extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(categoryName.toCapital, style: AppTextStyle.h4Style),
-                Text("${_getTaskCount(category)} tasks", style: AppTextStyle.h5Style)
+                Text("${ToDoState().getTaskCount(category)} tasks", style: AppTextStyle.h5Style)
               ],
             ),
           ),
@@ -57,17 +57,4 @@ class Lists extends StatelessWidget {
     }
   }
 
-  String _getCategoryName(TaskCategory category) {
-    return category.toString().substring(category.toString().indexOf('.') + 1);
-  }
-
-  int _getTaskCount(TaskCategory category) {
-    int count = 0;
-    for (Task task in AppData.tasks) {
-      if (task.category == category) {
-        count++;
-      }
-    }
-    return count;
-  }
 }

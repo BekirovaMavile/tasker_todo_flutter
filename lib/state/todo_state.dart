@@ -9,4 +9,18 @@ class ToDoState {
 
   //Переменные
   List<TaskCategory> categories = AppData.categories;
+
+  String getCategoryName(TaskCategory category) {
+    return category.toString().substring(category.toString().indexOf('.') + 1);
+  }
+
+  int getTaskCount(TaskCategory category) {
+    int count = 0;
+    for (Task task in AppData.tasks) {
+      if (task.category == category) {
+        count++;
+      }
+    }
+    return count;
+  }
 }

@@ -1,6 +1,6 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:todo_app_flutter/ui/screens/new_screen.dart';
 
 class FloatingButton extends StatefulWidget {
   const FloatingButton({super.key});
@@ -13,7 +13,7 @@ class _FloatingButtonState extends State<FloatingButton>
     with SingleTickerProviderStateMixin {
   bool toggle = true;
   late AnimationController _controller;
-  late Animation<double> _opacityAnimation;
+  // late Animation<double> _opacityAnimation;
   late Animation<double> _sizeAnimation;
 
   @override
@@ -25,7 +25,7 @@ class _FloatingButtonState extends State<FloatingButton>
       reverseDuration: const Duration(milliseconds: 275),
     );
 
-    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+    // _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
     _sizeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
 
     _controller.addListener(() {
@@ -117,16 +117,22 @@ class _FloatingButtonState extends State<FloatingButton>
 
 
   Widget _contentButton() {
-    return const Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 18, bottom: 10),
+          padding: const EdgeInsets.only(left: 8),
           child: Row(
             children: [
-              Icon(Icons.done_outline, color: Color(0xFF006CFF)),
-              SizedBox(width: 8),
-              Text("Task",
+              IconButton(
+                color: const Color(0xFF006CFF),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => NewTaskList()));
+                },
+                icon: const Icon(Icons.done_outline),
+              ),
+              const SizedBox(width: 8),
+              const Text("Task",
                   style: TextStyle(
                       fontSize: 18,
                       color: Color(0xFF006CFF),
@@ -135,14 +141,20 @@ class _FloatingButtonState extends State<FloatingButton>
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
         Padding(
-          padding: EdgeInsets.only(left: 18, top: 10),
+          padding: const EdgeInsets.only(left: 8),
           child: Row(
             children: [
-              Icon(Icons.dns, color: Color(0xFF006CFF)),
-              SizedBox(width: 8),
-              Text("List",
+              IconButton(
+                icon: const Icon(Icons.dns),
+                color: const Color(0xFF006CFF),
+                onPressed: () {
+                  _showListForm(context);
+                },
+              ),
+              const SizedBox(width: 8),
+              const Text("List",
                   style: TextStyle(
                     fontSize: 18,
                     color: Color(0xFF006CFF),
@@ -152,6 +164,35 @@ class _FloatingButtonState extends State<FloatingButton>
           ),
         ),
       ],
+    );
+  }
+
+  void _showListForm(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                decoration: InputDecoration(labelText: 'List Name'),
+              ),
+              SizedBox(height: 16),
+              TextField(
+                decoration: InputDecoration(labelText: 'List Color'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Save'),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
