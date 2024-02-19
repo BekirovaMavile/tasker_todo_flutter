@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app_flutter/state/todo_state.dart';
+import 'package:todo_app_flutter/ui/extension/app_extension.dart';
 import 'package:todo_app_flutter/ui/widgets/floating_action_button.dart';
 import 'package:todo_app_flutter/ui/widgets/lists.dart';
 import 'package:todo_app_flutter/ui_kit/_ui_kit.dart';
@@ -79,7 +81,7 @@ class _ListScreenState extends State<ListScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Lists", style: AppTextStyle.h3Style,),
-                    const Lists(),
+                    Lists(showCategoryDetails: _showCategoryDetails,),
                   ],
                 ),
               ),
@@ -113,6 +115,58 @@ class _ListScreenState extends State<ListScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showCategoryDetails(TaskCategory category) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+            color: ToDoState().getCategoryColor(category),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+          ),
+          child: Column(
+            children: [
+              // Display category name and task count
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      ToDoState().getCategoryName(category).toCapital,
+                      style: AppTextStyle.h2Style.copyWith(color: Colors.black),
+                    ),
+                    Text(
+                      "${ToDoState().getTaskCount(category)} tasks",
+                      style: AppTextStyle.h5Style.copyWith(color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: tasks.length,
+                  itemBuilder: (context, index) {
+                    if (tasks[index].category == category) {
+                      return ListTile(
+                        title: Text(tasks[index].content),
+                      );
+                    } else {
+                      return SizedBox.shrink();
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+
 import '../data/_data.dart';
+import '../ui_kit/_ui_kit.dart';
 
 class ToDoState {
   ToDoState._();
@@ -22,5 +25,22 @@ class ToDoState {
       }
     }
     return count;
+  }
+
+  Color getCategoryColor(TaskCategory category) {
+    switch (category) {
+      case TaskCategory.inbox:
+        return LightThemeColor.primaryLight;
+      case TaskCategory.work:
+        return LightThemeColor.green;
+      case TaskCategory.shopping:
+        return LightThemeColor.red;
+      case TaskCategory.family:
+        return LightThemeColor.yellow;
+      case TaskCategory.personal:
+        return LightThemeColor.purple;
+      default:
+        return Colors.grey;
+    }
   }
 }

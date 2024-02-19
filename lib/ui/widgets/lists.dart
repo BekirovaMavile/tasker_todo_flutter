@@ -5,7 +5,8 @@ import '../../data/_data.dart';
 import '../../ui_kit/_ui_kit.dart';
 
 class Lists extends StatelessWidget {
-  const Lists({super.key, });
+  const Lists({Key? key, required this.showCategoryDetails});
+  final void Function(TaskCategory) showCategoryDetails;
   List<TaskCategory> get categories => ToDoState().categories;
 
 
@@ -13,48 +14,33 @@ class Lists extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: categories.map((category) {
-        Color colors = _getCategoryColor(category);
+        Color colors = ToDoState().getCategoryColor(category);
         String categoryName = ToDoState().getCategoryName(category);
 
-        return Container(
-          margin: const EdgeInsets.all(8),
-          width: MediaQuery.of(context).size.width,
-          height: 69,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            color: colors,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(categoryName.toCapital, style: AppTextStyle.h4Style),
-                Text("${ToDoState().getTaskCount(category)} tasks", style: AppTextStyle.h5Style)
-              ],
+        return GestureDetector(
+          onTap: () => showCategoryDetails(category),
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            width: MediaQuery.of(context).size.width,
+            height: 69,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              color: colors,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(categoryName.toCapital, style: AppTextStyle.h4Style),
+                  Text("${ToDoState().getTaskCount(category)} tasks", style: AppTextStyle.h5Style)
+                ],
+              ),
             ),
           ),
         );
       }).toList(),
     );
   }
-
-  Color _getCategoryColor(TaskCategory category) {
-    switch (category) {
-      case TaskCategory.inbox:
-        return LightThemeColor.primaryLight;
-      case TaskCategory.work:
-        return LightThemeColor.green;
-      case TaskCategory.shopping:
-        return LightThemeColor.red;
-      case TaskCategory.family:
-        return LightThemeColor.yellow;
-      case TaskCategory.personal:
-        return LightThemeColor.purple;
-      default:
-        return Colors.grey;
-    }
-  }
-
 }
