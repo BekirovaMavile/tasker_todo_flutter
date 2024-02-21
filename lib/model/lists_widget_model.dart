@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ListWidgetModel {
-  var listName = '';
-  String listColor = '';
-  void saveList(BuildContext context) {
-    print(listName);
-  }
+class ListWidgetModel extends ChangeNotifier{
+  var _list = <List>[];
+
+  List<List> get list => _list.toList();
 }
 
-class ListWidgetModelProvider extends InheritedWidget {
+class ListWidgetModelProvider extends InheritedNotifier {
   final ListWidgetModel model;
   const ListWidgetModelProvider({
     Key? key,
@@ -16,6 +14,7 @@ class ListWidgetModelProvider extends InheritedWidget {
     required Widget child,
   }) : super(
     key: key,
+    notifier: model,
     child: child,
   );
 
@@ -29,10 +28,5 @@ class ListWidgetModelProvider extends InheritedWidget {
         .getElementForInheritedWidgetOfExactType<ListWidgetModelProvider>()
         ?.widget;
     return widget is ListWidgetModelProvider ? widget : null;
-  }
-
-  @override
-  bool updateShouldNotify(ListWidgetModelProvider oldWidget) {
-    return true;
   }
 }

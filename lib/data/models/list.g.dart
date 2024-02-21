@@ -17,7 +17,7 @@ class ListAdapter extends TypeAdapter<List> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return List(
-      name: fields[0] as String, color: fields[0] as Color,
+      name: fields[0] as String, color: fields[0],
     );
   }
 

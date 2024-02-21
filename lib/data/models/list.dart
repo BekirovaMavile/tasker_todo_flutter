@@ -8,7 +8,7 @@ part 'list.g.dart';
 class List{
   @HiveField(0)
   String name;
-  Color color;
+  String color;
 
   List({required this.name, required this.color});
 }

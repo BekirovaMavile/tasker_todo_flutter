@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_flutter/model/list_widget_model.dart';
+import 'package:todo_app_flutter/model/list_form_widget_model.dart';
 
 class ListFormWidget extends StatefulWidget {
   const ListFormWidget({Key? key}) : super(key: key);
@@ -9,11 +9,11 @@ class ListFormWidget extends StatefulWidget {
 }
 
 class _ListFormWidgetState extends State<ListFormWidget> {
-  final _model = ListWidgetModel();
+  final _model = ListFormWidgetModel();
 
   @override
   Widget build(BuildContext context) {
-    return ListWidgetModelProvider(
+    return ListFormWidgetModelProvider(
         model: _model,
         child: const _ListFormWidgetBody(),
     );
@@ -38,7 +38,7 @@ class _ListFormWidgetBody extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => ListWidgetModelProvider.read(context)?.model.saveList(context),
+        onPressed: () => ListFormWidgetModelProvider.read(context)?.model.saveList(context),
         child: const Icon(Icons.done),
       ),
     );
@@ -50,7 +50,7 @@ class _ListNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = ListWidgetModelProvider.read(context)?.model;
+    final model = ListFormWidgetModelProvider.read(context)?.model;
     return Column(
       children: [
         TextField(

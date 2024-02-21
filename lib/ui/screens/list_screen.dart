@@ -80,7 +80,10 @@ class _ListScreenState extends State<ListScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Lists", style: AppTextStyle.h3Style,),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: Text("Lists", style: AppTextStyle.h3Style,),
+                    ),
                     Lists(showCategoryDetails: _showCategoryDetails,),
                   ],
                 ),
@@ -194,15 +197,6 @@ class _ListScreenState extends State<ListScreen> {
         );
       },
     );
-  }
-}
-
-class _ListFormWidgetBody extends StatelessWidget {
-  const _ListFormWidgetBody({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
 
