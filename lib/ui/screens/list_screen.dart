@@ -121,52 +121,88 @@ class _ListScreenState extends State<ListScreen> {
   void _showCategoryDetails(TaskCategory category) {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
       ),
       builder: (BuildContext context) {
         return Container(
           decoration: BoxDecoration(
             color: ToDoState().getCategoryColor(category),
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
           ),
-          child: Column(
-            children: [
-              // Display category name and task count
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 60, top: 16, bottom: 10, right: 26),
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    Text(
-                      ToDoState().getCategoryName(category).toCapital,
-                      style: AppTextStyle.h2Style.copyWith(color: Colors.black),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          ToDoState().getCategoryName(category).toCapital,
+                          style: AppTextStyle.h1Style.copyWith(color: Colors.black),
+                        ),
+                        Text(
+                          "${ToDoState().getTaskCount(category)} tasks",
+                          style: AppTextStyle.h3Style.copyWith(color: Colors.black),
+                        ),
+                      ],
                     ),
-                    Text(
-                      "${ToDoState().getTaskCount(category)} tasks",
-                      style: AppTextStyle.h5Style.copyWith(color: Colors.black),
-                    ),
+                    const Spacer(),
+                    IconButton(
+                      icon: const Icon(Icons.create, size: 27,),
+                      onPressed: () {},
+                    )
                   ],
                 ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: tasks.length,
-                  itemBuilder: (context, index) {
-                    if (tasks[index].category == category) {
-                      return ListTile(
-                        title: Text(tasks[index].content),
-                      );
-                    } else {
-                      return SizedBox.shrink();
-                    }
-                  },
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: tasks.length,
+                    itemBuilder: (context, index) {
+                      if (tasks[index].category == category) {
+                        return Column(
+                          children: [
+                            Row(
+                              children: [
+                                Checkbox(
+                                  value: tasks[index].isCompletedBottom,
+                                  shape: const CircleBorder(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      tasks[index].isCompletedBottom = value ?? false;
+                                    });
+                                  },
+                                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                ),
+                                Text(tasks[index].content, style: AppTextStyle.h3Style.copyWith(color: Colors.black)),
+                              ],
+                            ),
+                            const Divider(color: Colors.black26,)
+                          ],
+                        );
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
     );
   }
 }
+
+class _ListFormWidgetBody extends StatelessWidget {
+  const _ListFormWidgetBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
