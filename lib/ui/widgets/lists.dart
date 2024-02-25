@@ -14,31 +14,36 @@ class Lists extends StatefulWidget {
 }
 
 class _ListsState extends State<Lists> {
-  // List<TaskCategory> get categories => ToDoState().categories;
   final model = ListWidgetModel();
 
   @override
   Widget build(BuildContext context) {
+    var index = 0;
     return ListWidgetModelProvider(
-        model: model,
-        child: _ListWidgetBody(
-            showCategoryDetails: widget.showCategoryDetails)
+      model: model,
+      child: _ListWidgetBody(
+        showCategoryDetails: widget.showCategoryDetails,
+        indexInList: index,
+      ),
     );
   }
 }
 
 class _ListWidgetBody extends StatelessWidget {
-  const _ListWidgetBody({Key? key, required this.showCategoryDetails});
+  const _ListWidgetBody({Key? key, required this.showCategoryDetails, required this.indexInList});
   final void Function(TaskCategory) showCategoryDetails;
+  final int indexInList;
   List<TaskCategory> get categories => ToDoState().categories;
 
   @override
   Widget build(BuildContext context) {
     final listCount = ListWidgetModelProvider.watch(context)?.model.list.length ?? 0;
-    // return Column(
-    //   children: categories.map((category) {
-    //     Color colors = ToDoState().getCategoryColor(category);
-    //     String categoryName = ToDoState().getCategoryName(category);
+    final lists = ListWidgetModelProvider.read(context)!.model.list[indexInList];
+    return Column(
+      children: categories.map((category) {
+        // Color colors = ToDoState().getCategoryColor(category);
+        // String categoryName = ToDoState().getCategoryName(category);
+        // int taskCount = ListWidgetModelProvider.watch(context)?.model.getTaskCount(category) ?? 0;
 
         return GestureDetector(
           // onTap: () => showCategoryDetails(category),
@@ -56,16 +61,15 @@ class _ListWidgetBody extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(listCount.toString())
+                  Text(lists.name),
                   // Text(categoryName.toCapital, style: AppTextStyle.h4Style),
-                  // Text("${ToDoState().getTaskCount(category)} tasks", style: AppTextStyle.h5Style)
+                  // Text("$taskCount tasks", style: AppTextStyle.h5Style)
                 ],
               ),
             ),
           ),
         );
-      // }).toList(),
-    // );
+      }).toList(),
+    );
   }
 }
-

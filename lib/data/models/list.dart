@@ -5,10 +5,10 @@ part 'list.g.dart';
 
 @HiveType(typeId : 1)
 
-class List{
+class Lists{
   @HiveField(0)
   String name;
   String color;
 
-  List({required this.name, required this.color});
+  Lists({required this.name, required this.color});
 }

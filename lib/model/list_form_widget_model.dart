@@ -9,13 +9,13 @@ class ListFormWidgetModel {
   void saveList(BuildContext context) async {
     if (listName.isEmpty && listColor.isEmpty) return;
     if (!Hive.isAdapterRegistered(1)) {
-      Hive.registerAdapter(ListAdapter());
+      Hive.registerAdapter(ListsAdapter());
     }
     final box = await Hive.openBox<List>('list_box');
-    final list = List(name: listName, color: listColor);
-    await box.add(list);
+    final list = Lists(name: listName, color: listColor);
+    await box.add(list as List);
     Navigator.of(context).pop();
-    // print(listName);
+    print(listName);
   }
 }
 
