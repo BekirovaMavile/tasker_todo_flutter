@@ -16,6 +16,7 @@ class ListWidgetModel extends ChangeNotifier{
     notifyListeners();
   }
 
+
   void _setup() async {
     if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(ListsAdapter());

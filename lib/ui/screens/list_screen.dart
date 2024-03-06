@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app_flutter/model/lists_widget_model.dart';
 import 'package:todo_app_flutter/state/todo_state.dart';
 import 'package:todo_app_flutter/ui/extension/app_extension.dart';
 import 'package:todo_app_flutter/ui/widgets/floating_action_button.dart';
@@ -16,6 +17,7 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   List<Task> tasks = AppData.tasks;
+
   get category => AppData.categories;
 
   @override
@@ -45,14 +47,18 @@ class _ListScreenState extends State<ListScreen> {
                                   tasks[index].isCompleted = value ?? false;
                                 });
                               },
-                              visualDensity: VisualDensity.adaptivePlatformDensity,
-                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              visualDensity:
+                              VisualDensity.adaptivePlatformDensity,
+                              materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
                             ),
                             Expanded(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(tasks[index].content, style: AppTextStyle.h2Style),
+                                  Text(tasks[index].content,
+                                      style: AppTextStyle.h2Style),
                                   ColoredDot(category: tasks[index].category),
                                 ],
                               ),
@@ -82,9 +88,13 @@ class _ListScreenState extends State<ListScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 30),
-                      child: Text("Lists", style: AppTextStyle.h3Style,),
+                      child: Text(
+                        "Lists",
+                        style: AppTextStyle.h3Style,
+                      ),
                     ),
-                    Lists(showCategoryDetails: _showCategoryDetails,),
+                    Lists(showCategoryDetails: _showCategoryDetails)
+                    // _lists(context),
                   ],
                 ),
               ),
@@ -96,7 +106,6 @@ class _ListScreenState extends State<ListScreen> {
       floatingActionButton: const FloatingButton(),
     );
   }
-
 
   PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
@@ -131,10 +140,12 @@ class _ListScreenState extends State<ListScreen> {
         return Container(
           decoration: BoxDecoration(
             color: ToDoState().getCategoryColor(category),
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
+            borderRadius:
+            const BorderRadius.vertical(top: Radius.circular(20.0)),
           ),
           child: Padding(
-            padding: const EdgeInsets.only(left: 60, top: 16, bottom: 10, right: 26),
+            padding:
+            const EdgeInsets.only(left: 60, top: 16, bottom: 10, right: 26),
             child: Column(
               children: [
                 Row(
@@ -143,18 +154,25 @@ class _ListScreenState extends State<ListScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          ToDoState().getCategoryName(category).toCapital,
-                          style: AppTextStyle.h1Style.copyWith(color: Colors.black),
+                          ToDoState()
+                              .getCategoryName(category)
+                              .toCapital,
+                          style: AppTextStyle.h1Style
+                              .copyWith(color: Colors.black),
                         ),
                         Text(
                           "${ToDoState().getTaskCount(category)} tasks",
-                          style: AppTextStyle.h3Style.copyWith(color: Colors.black),
+                          style: AppTextStyle.h3Style
+                              .copyWith(color: Colors.black),
                         ),
                       ],
                     ),
                     const Spacer(),
                     IconButton(
-                      icon: const Icon(Icons.create, size: 27,),
+                      icon: const Icon(
+                        Icons.create,
+                        size: 27,
+                      ),
                       onPressed: () {},
                     )
                   ],
@@ -173,16 +191,23 @@ class _ListScreenState extends State<ListScreen> {
                                   shape: const CircleBorder(),
                                   onChanged: (value) {
                                     setState(() {
-                                      tasks[index].isCompletedBottom = value ?? false;
+                                      tasks[index].isCompletedBottom =
+                                          value ?? false;
                                     });
                                   },
-                                  visualDensity: VisualDensity.adaptivePlatformDensity,
-                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                  visualDensity:
+                                  VisualDensity.adaptivePlatformDensity,
+                                  materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
                                 ),
-                                Text(tasks[index].content, style: AppTextStyle.h3Style.copyWith(color: Colors.black)),
+                                Text(tasks[index].content,
+                                    style: AppTextStyle.h3Style
+                                        .copyWith(color: Colors.black)),
                               ],
                             ),
-                            const Divider(color: Colors.black26,)
+                            const Divider(
+                              color: Colors.black26,
+                            )
                           ],
                         );
                       } else {
@@ -198,5 +223,28 @@ class _ListScreenState extends State<ListScreen> {
       },
     );
   }
-}
 
+  // Widget _lists(BuildContext context) {
+  //   final groupsCount = ListWidgetModelProvider.watch(context)?.model.list.length ?? 0;
+  //   print("groupsCount: $groupsCount");
+  //
+  //   return ListView.separated(
+  //
+  //     shrinkWrap: true,
+  //     itemCount: groupsCount,
+  //     itemBuilder: (BuildContext context, int index) {
+  //       return ListTile(
+  //         tileColor: Colors.red,
+  //         title: Text("name"),
+  //         trailing: const Icon(Icons.chevron_right),
+  //         onTap: () {},
+  //       );
+  //
+  //       // return _ListWidgetBody(indexInList: index, showCategoryDetails: _showCategoryDetails);
+  //     },
+  //     separatorBuilder: (BuildContext context, int index) {
+  //       return const Divider(height: 5);
+  //     },
+  //   );
+  // }
+}
