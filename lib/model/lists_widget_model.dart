@@ -11,6 +11,14 @@ class ListWidgetModel extends ChangeNotifier{
     _setup();
   }
 
+  void deleteList(int listIndex) async {
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(ListsAdapter());
+    }
+    final box = await Hive.openBox<Lists>('list_box');
+    await box.deleteAt(listIndex);
+  }
+
   void _readListsFromHive(Box<Lists> box) {
     _list = box.values.toList();
     notifyListeners();
@@ -22,6 +30,7 @@ class ListWidgetModel extends ChangeNotifier{
       Hive.registerAdapter(ListsAdapter());
     }
     final box = await Hive.openBox<Lists>('list_box');
+    // Hive.deleteFromDisk();
     _readListsFromHive(box);
     box.listenable().addListener(() => _readListsFromHive(box));
   }

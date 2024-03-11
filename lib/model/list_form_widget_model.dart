@@ -4,20 +4,25 @@ import '../data/models/list.dart';
 
 class ListFormWidgetModel {
   var listName = '';
-  String listColor = '';
+  String? listColor= '';
 
   void saveList(BuildContext context) async {
-    if (listName.isEmpty && listColor.isEmpty) return;
+    if (listName.isEmpty || listColor == null) return;
+
     if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(ListsAdapter());
     }
+
     final box = await Hive.openBox<Lists>('list_box');
-    final list = Lists(name: listName, color: listColor);
+    final list = Lists(name: listName, color: listColor.toString());
     await box.add(list as Lists);
     Navigator.of(context).pop();
     print(listName);
+    print(listColor);
   }
 }
+
+
 
 class ListFormWidgetModelProvider extends InheritedWidget {
   final ListFormWidgetModel model;

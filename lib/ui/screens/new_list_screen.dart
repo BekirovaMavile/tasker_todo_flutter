@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:todo_app_flutter/model/list_form_widget_model.dart';
 
 class ListFormWidget extends StatefulWidget {
@@ -14,31 +15,37 @@ class _ListFormWidgetState extends State<ListFormWidget> {
   @override
   Widget build(BuildContext context) {
     return ListFormWidgetModelProvider(
-        model: _model,
-        child: const _ListFormWidgetBody(),
+      model: _model,
+      child: const _ListFormWidgetBody(),
     );
   }
 }
 
 class _ListFormWidgetBody extends StatelessWidget {
-  const _ListFormWidgetBody({super.key});
+  const _ListFormWidgetBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final model = ListFormWidgetModelProvider.read(context)?.model;
     return Scaffold(
       appBar: AppBar(
         title: const Text('New list'),
       ),
       body: Center(
         child: Container(
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: _ListNameWidget(),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _ListNameWidget(),
+              const SizedBox(height: 20),
+              _ListColorPickerWidget(),
+            ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => ListFormWidgetModelProvider.read(context)?.model.saveList(context),
+        onPressed: () => model?.saveList(context),
         child: const Icon(Icons.done),
       ),
     );
@@ -51,26 +58,75 @@ class _ListNameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = ListFormWidgetModelProvider.read(context)?.model;
+    return TextField(
+      autofocus: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        hintText: 'List name',
+      ),
+      onChanged: (value) => model?.listName = value,
+      onEditingComplete: () => model?.saveList(context),
+    );
+  }
+}
+
+class _ListColorPickerWidget extends StatefulWidget {
+  const _ListColorPickerWidget({Key? key}) : super(key: key);
+
+  @override
+  __ListColorPickerWidgetState createState() => __ListColorPickerWidgetState();
+}
+
+class __ListColorPickerWidgetState extends State<_ListColorPickerWidget> {
+  Color selectedColor = Colors.white; // Initial color
+
+  @override
+  Widget build(BuildContext context) {
+    final model = ListFormWidgetModelProvider.read(context)?.model;
     return Column(
       children: [
-        TextField(
-          autofocus: true,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'List name',
+        Text('Selected Color:'),
+        SizedBox(
+          height: 40,
+          child: InkWell(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Pick a color'),
+                    content: SingleChildScrollView(
+                      child: ColorPicker(
+                        pickerColor: selectedColor,
+                        onColorChanged: (color) {
+                          setState(() {
+                            selectedColor = color;
+                          });
+                        },
+                        showLabel: true,
+                        pickerAreaHeightPercent: 0.8,
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          model?.listColor = selectedColor.toString();
+                        },
+                        child: Text('Save'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: selectedColor,
+                border: Border.all(color: Colors.black),
+              ),
+            ),
           ),
-          onChanged: (value) => model?.listName = value,
-          onEditingComplete: () => model?.saveList(context),
-        ),
-        SizedBox(height: 20),
-        TextField(
-          autofocus: true,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'List color',
-          ),
-          onChanged: (value) => model?.listColor = value,
-          onEditingComplete: () => model?.saveList(context),
         ),
       ],
     );
