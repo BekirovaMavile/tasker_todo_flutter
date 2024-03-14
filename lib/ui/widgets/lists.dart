@@ -5,6 +5,7 @@ import 'package:todo_app_flutter/ui/extension/app_extension.dart';
 import '../../data/_data.dart';
 import '../../ui_kit/_ui_kit.dart';
 
+
 class Lists extends StatefulWidget {
   Lists({Key? key, required this.showCategoryDetails});
 
@@ -65,7 +66,8 @@ class _ListWidgetBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = ListWidgetModelProvider.read(context)!.model;
     final lists = model.list[indexInList];
-    // Color color = model?.getColorFromString(lists.color) ?? Colors.white;
+    Color color = lists.color;
+    // Color color = _getColorFromString(lists.color);
     return Slidable(
       actionPane: const SlidableBehindActionPane(),
       secondaryActions: <Widget>[
@@ -78,12 +80,15 @@ class _ListWidgetBody extends StatelessWidget {
         ),
       ],
       child: Container(
-        margin: const EdgeInsets.all(8),
-        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.all(8),
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         height: 69,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Colors.purple,
+          color: color,
         ),
         child: Padding(
           padding: const EdgeInsets.only(left: 16),
@@ -99,4 +104,6 @@ class _ListWidgetBody extends StatelessWidget {
       ),
     );
   }
+
 }
+

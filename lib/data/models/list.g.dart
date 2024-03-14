@@ -16,17 +16,33 @@ class ListsAdapter extends TypeAdapter<Lists> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Lists(
-      name: fields[0] as String, color: fields[0] as String,
-    );
+
+    if (fields.containsKey(1) && fields[1] != null) {
+      return Lists(
+        name: fields[0] as String,
+        color: Color(fields[1] as int),
+      );
+    } else {
+      return Lists(
+        name: fields[0] as String,
+        color: Colors.white,
+      );
+    }
   }
 
   @override
   void write(BinaryWriter writer, Lists obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(1);
+
+    if (obj.color != null) {
+      writer.write(obj.color!.value);
+    } else {
+      writer.write(null);
+    }
   }
 
   @override
@@ -35,7 +51,7 @@ class ListsAdapter extends TypeAdapter<Lists> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ListsAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+          other is ListsAdapter &&
+              runtimeType == other.runtimeType &&
+              typeId == other.typeId;
 }

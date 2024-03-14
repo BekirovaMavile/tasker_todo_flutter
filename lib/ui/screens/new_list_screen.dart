@@ -78,7 +78,13 @@ class _ListColorPickerWidget extends StatefulWidget {
 }
 
 class __ListColorPickerWidgetState extends State<_ListColorPickerWidget> {
-  Color selectedColor = Colors.white; // Initial color
+  late Color selectedColor;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedColor = Colors.white; // Set initial color
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +117,7 @@ class __ListColorPickerWidgetState extends State<_ListColorPickerWidget> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          model?.listColor = selectedColor.toString();
+                          model?.listColor = selectedColor; // Set selected color to model
                         },
                         child: Text('Save'),
                       ),
