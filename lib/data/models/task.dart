@@ -1,10 +1,16 @@
-enum TaskCategory { inbox, work, shopping, family, personal }
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
+part 'task.g.dart';
+
+@HiveType(typeId: 2)
 class Task {
-  final String content;
-  final TaskCategory category;
-  bool isCompleted;
-  bool isCompletedBottom;
+  @HiveField(0)
+  String text;
 
-  Task(this.content, this.category, {this.isCompleted = false, this.isCompletedBottom = false});
+  @HiveField(1)
+  bool isDone;
+
+  Task({required this.text, required this.isDone});
 }

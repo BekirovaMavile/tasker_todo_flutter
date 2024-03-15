@@ -125,7 +125,7 @@ class _FloatingButtonState extends State<FloatingButton>
               IconButton(
                 color: const Color(0xFF006CFF),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => NewTaskList()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => TaskFormWidget()));
                 },
                 icon: const Icon(Icons.done_outline),
               ),

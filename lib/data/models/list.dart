@@ -8,7 +8,12 @@ part 'list.g.dart';
 class Lists {
   @HiveField(0)
   String name;
+
+  @HiveField(1)
   Color color;
+
+  @HiveField(2)
+  HiveList? tasks;
 
   Lists({required this.name, required this.color});
 }

@@ -7,9 +7,12 @@ import '../../ui_kit/_ui_kit.dart';
 
 
 class Lists extends StatefulWidget {
-  Lists({Key? key, required this.showCategoryDetails});
+  Lists({
+    Key? key,
+    // required this.showCategoryDetails
+  });
 
-  final void Function(TaskCategory) showCategoryDetails;
+  // final void Function(TaskCategory) showCategoryDetails;
 
   @override
   State<Lists> createState() => _ListsState();
@@ -23,15 +26,18 @@ class _ListsState extends State<Lists> {
     return ListWidgetModelProvider(
         model: model,
         child: _ListWidget(
-          showCategoryDetails: widget.showCategoryDetails,
+          // showCategoryDetails: widget.showCategoryDetails,
         ));
   }
 }
 
 class _ListWidget extends StatelessWidget {
-  const _ListWidget({super.key, required this.showCategoryDetails});
+  const _ListWidget({
+    super.key,
+    // required this.showCategoryDetails
+  });
 
-  final void Function(TaskCategory) showCategoryDetails;
+  // final void Function(TaskCategory) showCategoryDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,9 @@ class _ListWidget extends StatelessWidget {
       itemCount: groupsCount,
       itemBuilder: (BuildContext context, int index) {
         return _ListWidgetBody(
-            indexInList: index, showCategoryDetails: showCategoryDetails);
+            indexInList: index,
+            // showCategoryDetails: showCategoryDetails
+        );
       },
       separatorBuilder: (BuildContext context, int index) {
         return const SizedBox.shrink();
@@ -55,11 +63,11 @@ class _ListWidget extends StatelessWidget {
 class _ListWidgetBody extends StatelessWidget {
   const _ListWidgetBody({
     Key? key,
-    required this.showCategoryDetails,
+    // required this.showCategoryDetails,
     required this.indexInList,
   });
 
-  final void Function(TaskCategory) showCategoryDetails;
+  // final void Function(TaskCategory) showCategoryDetails;
   final int indexInList;
 
   @override
@@ -79,26 +87,29 @@ class _ListWidgetBody extends StatelessWidget {
           onTap: () => model.deleteList(indexInList),
         ),
       ],
-      child: Container(
-        margin: EdgeInsets.all(8),
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
-        height: 69,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: color,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(lists.name.toCapital, style: AppTextStyle.h4Style),
-              Text("2 tasks", style: AppTextStyle.h5Style),
-            ],
+      child: GestureDetector(
+        onTap: () => model.showTasks(context, indexInList),
+        child: Container(
+          margin: EdgeInsets.all(8),
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
+          height: 69,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            color: color,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(lists.name.toCapital, style: AppTextStyle.h4Style),
+                Text("2 tasks", style: AppTextStyle.h5Style),
+              ],
+            ),
           ),
         ),
       ),

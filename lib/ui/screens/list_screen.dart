@@ -16,9 +16,9 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  List<Task> tasks = AppData.tasks;
+  // List<Task> tasks = AppData.tasks;
 
-  get category => AppData.categories;
+  // get category => AppData.categories;
 
   @override
   Widget build(BuildContext context) {
@@ -29,58 +29,58 @@ class _ListScreenState extends State<ListScreen> {
           padding: const EdgeInsets.only(left: 8, right: 8),
           child: Column(
             children: [
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Checkbox(
-                              value: tasks[index].isCompleted,
-                              shape: const CircleBorder(),
-                              onChanged: (value) {
-                                setState(() {
-                                  tasks[index].isCompleted = value ?? false;
-                                });
-                              },
-                              visualDensity:
-                              VisualDensity.adaptivePlatformDensity,
-                              materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(tasks[index].content,
-                                      style: AppTextStyle.h2Style),
-                                  ColoredDot(category: tasks[index].category),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 40.0),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: LightThemeColor.grey,
-                                width: 3,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+              // ListView.builder(
+              //   shrinkWrap: true,
+              //   itemCount: tasks.length,
+              //   itemBuilder: (context, index) {
+              //     return Padding(
+              //       padding: const EdgeInsets.all(4.0),
+              //       child: Column(
+              //         children: [
+              //           Row(
+              //             children: [
+              //               Checkbox(
+              //                 value: tasks.isEmpty,
+              //                 shape: const CircleBorder(),
+              //                 onChanged: (value) {
+              //                   setState(() {
+              //                     // tasks[index].isCompleted = value ?? false;
+              //                   });
+              //                 },
+              //                 visualDensity:
+              //                 VisualDensity.adaptivePlatformDensity,
+              //                 materialTapTargetSize:
+              //                 MaterialTapTargetSize.shrinkWrap,
+              //               ),
+              //               Expanded(
+              //                 child: Row(
+              //                   mainAxisAlignment:
+              //                   MainAxisAlignment.spaceBetween,
+              //                   children: [
+              //                     Text("tasks[index].content",
+              //                         style: AppTextStyle.h2Style),
+              //                     // ColoredDot(category: tasks[index].category),
+              //                   ],
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //           Container(
+              //             margin: const EdgeInsets.only(left: 40.0),
+              //             decoration: const BoxDecoration(
+              //               border: Border(
+              //                 bottom: BorderSide(
+              //                   color: LightThemeColor.grey,
+              //                   width: 3,
+              //                 ),
+              //               ),
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     );
+              //   },
+              // ),
               Padding(
                 padding: const EdgeInsets.only(left: 50),
                 child: Column(
@@ -93,8 +93,9 @@ class _ListScreenState extends State<ListScreen> {
                         style: AppTextStyle.h3Style,
                       ),
                     ),
-                    Lists(showCategoryDetails: _showCategoryDetails)
-                    // _lists(context),
+                    Lists(
+                        // showCategoryDetails: _showCategoryDetails
+                    )
                   ],
                 ),
               ),
@@ -130,99 +131,99 @@ class _ListScreenState extends State<ListScreen> {
     );
   }
 
-  void _showCategoryDetails(TaskCategory category) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-      ),
-      builder: (BuildContext context) {
-        return Container(
-          decoration: BoxDecoration(
-            color: ToDoState().getCategoryColor(category),
-            borderRadius:
-            const BorderRadius.vertical(top: Radius.circular(20.0)),
-          ),
-          child: Padding(
-            padding:
-            const EdgeInsets.only(left: 60, top: 16, bottom: 10, right: 26),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          ToDoState()
-                              .getCategoryName(category)
-                              .toCapital,
-                          style: AppTextStyle.h1Style
-                              .copyWith(color: Colors.black),
-                        ),
-                        Text(
-                          "${ToDoState().getTaskCount(category)} tasks",
-                          style: AppTextStyle.h3Style
-                              .copyWith(color: Colors.black),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.create,
-                        size: 27,
-                      ),
-                      onPressed: () {},
-                    )
-                  ],
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: tasks.length,
-                    itemBuilder: (context, index) {
-                      if (tasks[index].category == category) {
-                        return Column(
-                          children: [
-                            Row(
-                              children: [
-                                Checkbox(
-                                  value: tasks[index].isCompletedBottom,
-                                  shape: const CircleBorder(),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      tasks[index].isCompletedBottom =
-                                          value ?? false;
-                                    });
-                                  },
-                                  visualDensity:
-                                  VisualDensity.adaptivePlatformDensity,
-                                  materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
-                                ),
-                                Text(tasks[index].content,
-                                    style: AppTextStyle.h3Style
-                                        .copyWith(color: Colors.black)),
-                              ],
-                            ),
-                            const Divider(
-                              color: Colors.black26,
-                            )
-                          ],
-                        );
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+  // void _showCategoryDetails(TaskCategory category) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+  //     ),
+  //     builder: (BuildContext context) {
+  //       return Container(
+  //         decoration: BoxDecoration(
+  //           color: ToDoState().getCategoryColor(category),
+  //           borderRadius:
+  //           const BorderRadius.vertical(top: Radius.circular(20.0)),
+  //         ),
+  //         child: Padding(
+  //           padding:
+  //           const EdgeInsets.only(left: 60, top: 16, bottom: 10, right: 26),
+  //           child: Column(
+  //             children: [
+  //               Row(
+  //                 children: [
+  //                   Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: [
+  //                       Text(
+  //                         ToDoState()
+  //                             .getCategoryName(category)
+  //                             .toCapital,
+  //                         style: AppTextStyle.h1Style
+  //                             .copyWith(color: Colors.black),
+  //                       ),
+  //                       Text(
+  //                         "${ToDoState().getTaskCount(category)} tasks",
+  //                         style: AppTextStyle.h3Style
+  //                             .copyWith(color: Colors.black),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   const Spacer(),
+  //                   IconButton(
+  //                     icon: const Icon(
+  //                       Icons.create,
+  //                       size: 27,
+  //                     ),
+  //                     onPressed: () {},
+  //                   )
+  //                 ],
+  //               ),
+  //               Expanded(
+  //                 child: ListView.builder(
+  //                   itemCount: tasks.length,
+  //                   itemBuilder: (context, index) {
+  //                     if (tasks[index].category == category) {
+  //                       return Column(
+  //                         children: [
+  //                           Row(
+  //                             children: [
+  //                               Checkbox(
+  //                                 value: tasks[index].isCompletedBottom,
+  //                                 shape: const CircleBorder(),
+  //                                 onChanged: (value) {
+  //                                   setState(() {
+  //                                     tasks[index].isCompletedBottom =
+  //                                         value ?? false;
+  //                                   });
+  //                                 },
+  //                                 visualDensity:
+  //                                 VisualDensity.adaptivePlatformDensity,
+  //                                 materialTapTargetSize:
+  //                                 MaterialTapTargetSize.shrinkWrap,
+  //                               ),
+  //                               Text(tasks[index].content,
+  //                                   style: AppTextStyle.h3Style
+  //                                       .copyWith(color: Colors.black)),
+  //                             ],
+  //                           ),
+  //                           const Divider(
+  //                             color: Colors.black26,
+  //                           )
+  //                         ],
+  //                       );
+  //                     } else {
+  //                       return const SizedBox.shrink();
+  //                     }
+  //                   },
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   // Widget _lists(BuildContext context) {
   //   final groupsCount = ListWidgetModelProvider.watch(context)?.model.list.length ?? 0;

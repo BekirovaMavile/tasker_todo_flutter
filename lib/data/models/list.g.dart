@@ -17,31 +17,35 @@ class ListsAdapter extends TypeAdapter<Lists> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
 
+
     if (fields.containsKey(1) && fields[1] != null) {
       return Lists(
         name: fields[0] as String,
         color: Color(fields[1] as int),
-      );
+      )..tasks = (fields[2] as HiveList?)?.castHiveList();
     } else {
       return Lists(
         name: fields[0] as String,
         color: Colors.white,
-      );
+      )..tasks = (fields[2] as HiveList?)?.castHiveList();
     }
   }
 
   @override
   void write(BinaryWriter writer, Lists obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.name)
-      ..writeByte(1);
+      ..writeByte(1)
+      ..write(obj.color)
+      ..writeByte(2)
+      ..write(obj.tasks);
 
     if (obj.color != null) {
-      writer.write(obj.color!.value);
+      writer.write(obj.color!.value); // Записываем значение цвета как целое число
     } else {
-      writer.write(null);
+      writer.write(null); // Если цвет не определен, записываем null
     }
   }
 
@@ -51,7 +55,7 @@ class ListsAdapter extends TypeAdapter<Lists> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is ListsAdapter &&
-              runtimeType == other.runtimeType &&
-              typeId == other.typeId;
+      other is ListsAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

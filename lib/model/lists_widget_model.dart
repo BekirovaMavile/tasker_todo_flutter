@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app_flutter/data/models/list.dart';
+import 'package:todo_app_flutter/ui/widgets/task.dart';
 
 class ListWidgetModel extends ChangeNotifier{
   var _list = <Lists>[];
@@ -9,6 +12,22 @@ class ListWidgetModel extends ChangeNotifier{
   List<Lists> get list => _list.toList();
   ListWidgetModel(){
     _setup();
+  }
+
+  void showTasks(BuildContext context, int listIndex) async {
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(ListsAdapter());
+    }
+    final box = await Hive.openBox<Lists>('list_box');
+    final listKey = box.keyAt(listIndex) as int;
+
+    unawaited(
+        Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => TasksWidget(),
+      settings: RouteSettings(
+        arguments: listKey,
+      ),
+    )));
   }
 
   void deleteList(int listIndex) async {
