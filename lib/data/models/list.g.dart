@@ -16,8 +16,6 @@ class ListsAdapter extends TypeAdapter<Lists> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-
-
     if (fields.containsKey(1) && fields[1] != null) {
       return Lists(
         name: fields[0] as String,
@@ -41,12 +39,6 @@ class ListsAdapter extends TypeAdapter<Lists> {
       ..write(obj.color)
       ..writeByte(2)
       ..write(obj.tasks);
-
-    if (obj.color != null) {
-      writer.write(obj.color!.value); // Записываем значение цвета как целое число
-    } else {
-      writer.write(null); // Если цвет не определен, записываем null
-    }
   }
 
   @override

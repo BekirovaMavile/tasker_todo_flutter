@@ -3,6 +3,7 @@ import 'package:todo_app_flutter/state/todo_state.dart';
 import 'package:todo_app_flutter/ui/extension/app_extension.dart';
 import 'package:todo_app_flutter/ui/widgets/coloredDot.dart';
 import '../../data/_data.dart';
+import '../../model/task_form_widget_model.dart';
 import '../../ui_kit/_ui_kit.dart';
 
 class TaskFormWidget extends StatefulWidget {
@@ -13,9 +14,76 @@ class TaskFormWidget extends StatefulWidget {
 }
 
 class _TaskFormWidgetState extends State<TaskFormWidget> {
+  TaskFormWidgetModel? _model;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_model == null) {
+      final arguments = ModalRoute.of(context)!.settings.arguments;
+      if (arguments is int) {
+        _model = TaskFormWidgetModel(listKey: arguments);
+      } else {
+        _model = TaskFormWidgetModel(listKey: 0);
+      }
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return TaskFormWidgetModelProvider(
+        model: _model!,
+        child: const _TextFormWidgetBody()
+    );
+  }
+}
+
+class _TextFormWidgetBody extends StatelessWidget {
+  const _TextFormWidgetBody({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('New Task'),
+      ),
+      body: Center(
+        child: Container(
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: _TaskTextWidget(),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            TaskFormWidgetModelProvider.read(context)?.model.saveTask(context),
+        child: const Icon(Icons.done),
+      ),
+    );
+  }
+}
+
+class _TaskTextWidget extends StatelessWidget {
+  const _TaskTextWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final model = TaskFormWidgetModelProvider.read(context)?.model;
+    return TextField(
+      autofocus: true,
+      maxLines: null,
+      minLines: null,
+      expands: true,
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+        hintText: 'Text task',
+      ),
+      onChanged: (value) => model?.taskText = value,
+      onEditingComplete: () => model?.saveTask(context),
+    );
   }
 }
 

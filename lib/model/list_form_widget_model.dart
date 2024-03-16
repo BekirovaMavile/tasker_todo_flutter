@@ -4,7 +4,7 @@ import '../data/models/list.dart';
 
 class ListFormWidgetModel {
   var listName = '';
-  Color? listColor; // Change type to Color
+  Color? listColor;
 
   void saveList(BuildContext context) async {
     if (listName.isEmpty || listColor == null) return;
@@ -48,6 +48,6 @@ class ListFormWidgetModelProvider extends InheritedWidget {
 
   @override
   bool updateShouldNotify(ListFormWidgetModelProvider oldWidget) {
-    return true;
+    return false;
   }
 }
