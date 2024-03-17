@@ -7,7 +7,7 @@ import 'task.dart';
 part 'list.g.dart';
 
 @HiveType(typeId: 1)
-class Lists {
+class Lists extends HiveObject{
   @HiveField(0)
   String name;
 
@@ -22,5 +22,6 @@ class Lists {
   void addTask(Box<Task> box, Task task) {
     tasks ??= HiveList(box);
     tasks?.add(task);
+    save();
   }
 }

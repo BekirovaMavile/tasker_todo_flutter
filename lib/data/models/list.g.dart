@@ -24,7 +24,7 @@ class ListsAdapter extends TypeAdapter<Lists> {
     } else {
       return Lists(
         name: fields[0] as String,
-        color: Colors.white,
+        color: Colors.white
       )..tasks = (fields[2] as HiveList?)?.castHiveList();
     }
   }

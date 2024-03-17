@@ -107,7 +107,16 @@ class _ListWidgetBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(lists.name.toCapital, style: AppTextStyle.h4Style),
-                Text("2 tasks", style: AppTextStyle.h5Style),
+                FutureBuilder<int>(
+                  future: model.getTaskCount(indexInList), // Асинхронно получаем количество задач
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator(); // Отображаем индикатор загрузки, если данные еще не получены
+                    } else {
+                      return Text("${snapshot.data} tasks", style: AppTextStyle.h5Style); // Отображаем количество задач
+                    }
+                  },
+                ),
               ],
             ),
           ),

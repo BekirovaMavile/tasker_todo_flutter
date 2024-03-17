@@ -6,6 +6,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app_flutter/data/models/list.dart';
 import 'package:todo_app_flutter/ui/widgets/task.dart';
 
+import '../data/_data.dart';
+
 class ListWidgetModel extends ChangeNotifier{
   var _list = <Lists>[];
 
@@ -30,11 +32,22 @@ class ListWidgetModel extends ChangeNotifier{
     )));
   }
 
+  Future<int> getTaskCount(int index) async {
+    final box = await Hive.openBox<Lists>('list_box');
+    final lists = box.getAt(index);
+    if (lists != null && lists.tasks != null) {
+      return lists.tasks!.length;
+    } else {
+      return 0;
+    }
+  }
+
   void deleteList(int listIndex) async {
     if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(ListsAdapter());
     }
     final box = await Hive.openBox<Lists>('list_box');
+    await box.getAt(listIndex)?.tasks?.deleteAllFromHive();
     await box.deleteAt(listIndex);
   }
 
@@ -49,7 +62,10 @@ class ListWidgetModel extends ChangeNotifier{
       Hive.registerAdapter(ListsAdapter());
     }
     final box = await Hive.openBox<Lists>('list_box');
-    // Hive.deleteFromDisk();
+    if (!Hive.isAdapterRegistered(2)) {
+      Hive.registerAdapter(TaskAdapter());
+    }
+    await Hive.openBox<Task>('tasks_box');
     _readListsFromHive(box);
     box.listenable().addListener(() => _readListsFromHive(box));
   }
