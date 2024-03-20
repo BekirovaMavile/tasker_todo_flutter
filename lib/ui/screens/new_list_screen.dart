@@ -83,7 +83,7 @@ class __ListColorPickerWidgetState extends State<_ListColorPickerWidget> {
   @override
   void initState() {
     super.initState();
-    selectedColor = Colors.white; // Set initial color
+    selectedColor = Colors.white;
   }
 
   @override
@@ -117,7 +117,7 @@ class __ListColorPickerWidgetState extends State<_ListColorPickerWidget> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          model?.listColor = selectedColor; // Set selected color to model
+                          model?.listColor = selectedColor;
                         },
                         child: Text('Save'),
                       ),

@@ -1,17 +1,16 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app_flutter/data/models/list.dart';
 import 'package:todo_app_flutter/ui/widgets/task.dart';
-
 import '../data/_data.dart';
+
 
 class ListWidgetModel extends ChangeNotifier{
   var _list = <Lists>[];
-
   List<Lists> get list => _list.toList();
+
   ListWidgetModel(){
     _setup();
   }
@@ -57,6 +56,7 @@ class ListWidgetModel extends ChangeNotifier{
   }
 
 
+
   void _setup() async {
     if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(ListsAdapter());
@@ -66,6 +66,10 @@ class ListWidgetModel extends ChangeNotifier{
       Hive.registerAdapter(TaskAdapter());
     }
     await Hive.openBox<Task>('tasks_box');
+    // if (!Hive.isAdapterRegistered(3)) {
+    //   Hive.registerAdapter(ColorAdapter());
+    // }
+
     _readListsFromHive(box);
     box.listenable().addListener(() => _readListsFromHive(box));
   }

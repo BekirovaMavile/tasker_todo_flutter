@@ -12,8 +12,6 @@ class Lists extends StatefulWidget {
     // required this.showCategoryDetails
   });
 
-  // final void Function(TaskCategory) showCategoryDetails;
-
   @override
   State<Lists> createState() => _ListsState();
 }
@@ -26,7 +24,6 @@ class _ListsState extends State<Lists> {
     return ListWidgetModelProvider(
         model: model,
         child: _ListWidget(
-          // showCategoryDetails: widget.showCategoryDetails,
         ));
   }
 }
@@ -36,8 +33,6 @@ class _ListWidget extends StatelessWidget {
     super.key,
     // required this.showCategoryDetails
   });
-
-  // final void Function(TaskCategory) showCategoryDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -63,19 +58,16 @@ class _ListWidget extends StatelessWidget {
 class _ListWidgetBody extends StatelessWidget {
   const _ListWidgetBody({
     Key? key,
-    // required this.showCategoryDetails,
     required this.indexInList,
   });
-
-  // final void Function(TaskCategory) showCategoryDetails;
   final int indexInList;
 
   @override
   Widget build(BuildContext context) {
     final model = ListWidgetModelProvider.read(context)!.model;
     final lists = model.list[indexInList];
-    Color color = lists.color;
-    // Color color = _getColorFromString(lists.color);
+    final Color colors = Color(lists.color!);
+
     return Slidable(
       actionPane: const SlidableBehindActionPane(),
       secondaryActions: <Widget>[
@@ -91,14 +83,11 @@ class _ListWidgetBody extends StatelessWidget {
         onTap: () => model.showTasks(context, indexInList),
         child: Container(
           margin: EdgeInsets.all(8),
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
+          width: MediaQuery.of(context).size.width,
           height: 69,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            color: color,
+            color: colors,
           ),
           child: Padding(
             padding: const EdgeInsets.only(left: 16),
@@ -108,12 +97,12 @@ class _ListWidgetBody extends StatelessWidget {
               children: [
                 Text(lists.name.toCapital, style: AppTextStyle.h4Style),
                 FutureBuilder<int>(
-                  future: model.getTaskCount(indexInList), // Асинхронно получаем количество задач
+                  future: model.getTaskCount(indexInList),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // Отображаем индикатор загрузки, если данные еще не получены
+                      return CircularProgressIndicator();
                     } else {
-                      return Text("${snapshot.data} tasks", style: AppTextStyle.h5Style); // Отображаем количество задач
+                      return Text("${snapshot.data} tasks", style: AppTextStyle.h5Style);
                     }
                   },
                 ),
@@ -124,6 +113,5 @@ class _ListWidgetBody extends StatelessWidget {
       ),
     );
   }
-
 }
 

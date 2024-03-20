@@ -12,18 +12,23 @@ class ListFormWidgetModel {
     if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(ListsAdapter());
     }
+    final listBox = await Hive.openBox<Lists>('list_box');
 
-    final box = await Hive.openBox<Lists>('list_box');
-    final list = Lists(name: listName, color: listColor!);
-    await box.add(list as Lists);
+    final list = Lists(
+      name: listName,
+      color: listColor!.value
+    );
+
+    await listBox.add(list);
     Navigator.of(context).pop();
     print(listName);
-    print(listColor);
+    print("Это в saveList: ${listColor!.value}");
   }
 }
 
 class ListFormWidgetModelProvider extends InheritedWidget {
   final ListFormWidgetModel model;
+
   const ListFormWidgetModelProvider({
     Key? key,
     required this.model,
@@ -39,7 +44,6 @@ class ListFormWidgetModelProvider extends InheritedWidget {
   }
 
   static ListFormWidgetModelProvider? read(BuildContext context) {
-    print("read");
     final widget = context
         .getElementForInheritedWidgetOfExactType<ListFormWidgetModelProvider>()
         ?.widget;

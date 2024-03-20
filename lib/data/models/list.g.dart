@@ -19,12 +19,12 @@ class ListsAdapter extends TypeAdapter<Lists> {
     if (fields.containsKey(1) && fields[1] != null) {
       return Lists(
         name: fields[0] as String,
-        color: Color(fields[1] as int),
+        color: fields[1] as int,
       )..tasks = (fields[2] as HiveList?)?.castHiveList();
     } else {
       return Lists(
         name: fields[0] as String,
-        color: Colors.white
+        color: 1,
       )..tasks = (fields[2] as HiveList?)?.castHiveList();
     }
   }
