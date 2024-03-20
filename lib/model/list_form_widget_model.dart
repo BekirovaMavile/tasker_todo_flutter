@@ -12,13 +12,16 @@ class ListFormWidgetModel {
     if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(ListsAdapter());
     }
-
-    final box = await Hive.openBox<Lists>('list_box');
-    final list = Lists(name: listName, color: listColor!);
-    await box.add(list as Lists);
+    final listBox = await Hive.openBox<Lists>('list_box');
+    final list = Lists(
+      name: listName,
+      color: listColor,
+    );
+    await listBox.add(list);
     Navigator.of(context).pop();
+
     print(listName);
-    print(listColor);
+    print("Это в saveList: ${listColor}");
   }
 }
 

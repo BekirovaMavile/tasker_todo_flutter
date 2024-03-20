@@ -12,7 +12,7 @@ class Lists extends HiveObject{
   String name;
 
   @HiveField(1)
-  Color color;
+  Color? color;
 
   @HiveField(2)
   HiveList<Task>? tasks;
