@@ -66,7 +66,7 @@ class _ListWidgetBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = ListWidgetModelProvider.read(context)!.model;
     final lists = model.list[indexInList];
-    final Color colors = Color(lists.color!);
+    final Color? colors = lists.color;
 
     return Slidable(
       actionPane: const SlidableBehindActionPane(),

@@ -16,17 +16,10 @@ class ListsAdapter extends TypeAdapter<Lists> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    if (fields.containsKey(1) && fields[1] != null) {
-      return Lists(
-        name: fields[0] as String,
-        color: fields[1] as int,
-      )..tasks = (fields[2] as HiveList?)?.castHiveList();
-    } else {
-      return Lists(
-        name: fields[0] as String,
-        color: 1,
-      )..tasks = (fields[2] as HiveList?)?.castHiveList();
-    }
+    return Lists(
+      name: fields[0] as String,
+      color: fields[1] as Color?,
+    )..tasks = (fields[2] as HiveList?)?.castHiveList();
   }
 
   @override

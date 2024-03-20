@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import '../data/models/list.dart';
 
 class ListFormWidgetModel {
@@ -13,16 +14,15 @@ class ListFormWidgetModel {
       Hive.registerAdapter(ListsAdapter());
     }
     final listBox = await Hive.openBox<Lists>('list_box');
-
     final list = Lists(
       name: listName,
-      color: listColor!.value
+      color: listColor,
     );
-
     await listBox.add(list);
     Navigator.of(context).pop();
+
     print(listName);
-    print("Это в saveList: ${listColor!.value}");
+    print("Это в saveList: ${listColor}");
   }
 }
 

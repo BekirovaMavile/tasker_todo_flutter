@@ -6,13 +6,16 @@ import 'task.dart';
 import 'package:hive_flutter/adapters.dart';
 part 'list.g.dart';
 
+// Hive.registerAdapter(ColorAdapter());
+
 @HiveType(typeId: 1)
 class Lists extends HiveObject {
+
   @HiveField(0)
   String name;
 
   @HiveField(1)
-  int? color;
+  Color? color;
 
   @HiveField(2)
   HiveList<Task>? tasks;
@@ -27,4 +30,5 @@ class Lists extends HiveObject {
     tasks?.add(task);
     save();
   }
+
 }

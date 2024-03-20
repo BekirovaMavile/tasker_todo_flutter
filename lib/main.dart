@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app_flutter/data/models/color.dart';
 import 'package:todo_app_flutter/ui/screens/list_screen.dart';
 import 'package:todo_app_flutter/ui_kit/_ui_kit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  Hive.registerAdapter(ColorAdapter());
   runApp(const MyApp());
 }
 
