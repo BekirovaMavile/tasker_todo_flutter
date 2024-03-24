@@ -47,9 +47,17 @@ class TasksWidgetBody extends StatelessWidget {
         title: Text(title.toCapital),
       ),
       body: _TaskListWidget(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => model?.showForm(context),
-        child: const Icon(Icons.add),
+      floatingActionButton: Container(
+        width: 70,
+        height: 70,
+        child: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(50.0))
+          ),
+          backgroundColor: Colors.white,
+          onPressed: () => model?.showForm(context),
+          child: const Icon(Icons.add, size: 27, color: Colors.blue,),
+        ),
       ),
     );
   }

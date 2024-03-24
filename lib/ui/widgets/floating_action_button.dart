@@ -43,7 +43,7 @@ class _FloatingButtonState extends State<FloatingButton>
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250,
+      height: 160,
       width: 250,
       child: Stack(
         children: [
@@ -118,28 +118,28 @@ class _FloatingButtonState extends State<FloatingButton>
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: Row(
-            children: [
-              IconButton(
-                color: const Color(0xFF006CFF),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => TaskFormWidget()));
-                },
-                icon: const Icon(Icons.done_outline),
-              ),
-              const SizedBox(width: 8),
-              const Text("Task",
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Color(0xFF006CFF),
-                  ),
-              ),
-            ],
-          ),
-        ),
-        const Divider(),
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 8),
+        //   child: Row(
+        //     children: [
+        //       IconButton(
+        //         color: const Color(0xFF006CFF),
+        //         onPressed: () {
+        //           Navigator.of(context).push(MaterialPageRoute(builder: (_) => TaskFormWidget()));
+        //         },
+        //         icon: const Icon(Icons.done_outline),
+        //       ),
+        //       const SizedBox(width: 8),
+        //       const Text("Task",
+        //           style: TextStyle(
+        //               fontSize: 18,
+        //               color: Color(0xFF006CFF),
+        //           ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // const Divider(),
         Padding(
           padding: const EdgeInsets.only(left: 8),
           child: Row(
@@ -165,32 +165,32 @@ class _FloatingButtonState extends State<FloatingButton>
     );
   }
 
-  void _showListForm(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                decoration: InputDecoration(labelText: 'List Name'),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                decoration: InputDecoration(labelText: 'List Color'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Save'),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
+  // void _showListForm(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return Container(
+  //         padding: EdgeInsets.all(16),
+  //         child: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             TextField(
+  //               decoration: InputDecoration(labelText: 'List Name'),
+  //             ),
+  //             SizedBox(height: 16),
+  //             TextField(
+  //               decoration: InputDecoration(labelText: 'List Color'),
+  //             ),
+  //             ElevatedButton(
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //               child: Text('Save'),
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }

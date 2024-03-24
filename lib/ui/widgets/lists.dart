@@ -5,7 +5,6 @@ import 'package:todo_app_flutter/ui/extension/app_extension.dart';
 import '../../data/_data.dart';
 import '../../ui_kit/_ui_kit.dart';
 
-
 class Lists extends StatefulWidget {
   Lists({
     Key? key,

@@ -44,9 +44,17 @@ class _ListFormWidgetBody extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => model?.saveList(context),
-        child: const Icon(Icons.done),
+      floatingActionButton: Container(
+        width: 70,
+        height: 70,
+        child: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(50.0))
+          ),
+          backgroundColor: Colors.white,
+          onPressed: () => model?.saveList(context),
+          child: const Icon(Icons.done, size: 27, color: Colors.blue,),
+        ),
       ),
     );
   }

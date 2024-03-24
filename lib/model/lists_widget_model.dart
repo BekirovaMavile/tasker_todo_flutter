@@ -49,6 +49,8 @@ class ListWidgetModel extends ChangeNotifier{
     final box = await Hive.openBox<Lists>('list_box');
     await box.getAt(listIndex)?.tasks?.deleteAllFromHive();
     await box.deleteAt(listIndex);
+    // box.deleteAll(listIndex as Iterable);
+
   }
 
   void _readListsFromHive(Box<Lists> box) {
