@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:todo_app_flutter/model/list_form_widget_model.dart';
+import 'package:todo_app_flutter/model/group_form_widget_model.dart';
 
-class ListFormWidget extends StatefulWidget {
-  const ListFormWidget({Key? key}) : super(key: key);
+class GroupFormWidget extends StatefulWidget {
+  const GroupFormWidget({Key? key}) : super(key: key);
 
   @override
-  State<ListFormWidget> createState() => _ListFormWidgetState();
+  State<GroupFormWidget> createState() => _GroupFormWidgetState();
 }
 
-class _ListFormWidgetState extends State<ListFormWidget> {
-  final _model = ListFormWidgetModel();
+class _GroupFormWidgetState extends State<GroupFormWidget> {
+  final _model = GroupFormWidgetModel();
 
   @override
   Widget build(BuildContext context) {
-    return ListFormWidgetModelProvider(
+    return GroupFormWidgetModelProvider(
       model: _model,
-      child: const _ListFormWidgetBody(),
+      child: const _GroupFormWidgetBody(),
     );
   }
 }
 
-class _ListFormWidgetBody extends StatelessWidget {
-  const _ListFormWidgetBody({Key? key}) : super(key: key);
+class _GroupFormWidgetBody extends StatelessWidget {
+  const _GroupFormWidgetBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final model = ListFormWidgetModelProvider.read(context)?.model;
+    final model = GroupFormWidgetModelProvider.read(context)?.model;
     return Scaffold(
       appBar: AppBar(
         title: const Text('New list'),
@@ -37,9 +37,9 @@ class _ListFormWidgetBody extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _ListNameWidget(),
+              _GroupNameWidget(),
               const SizedBox(height: 20),
-              _ListColorPickerWidget(),
+              _GroupColorPickerWidget(),
             ],
           ),
         ),
@@ -52,7 +52,7 @@ class _ListFormWidgetBody extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(50.0))
           ),
           backgroundColor: Colors.white,
-          onPressed: () => model?.saveList(context),
+          onPressed: () => model?.saveGroup(context),
           child: const Icon(Icons.done, size: 27, color: Colors.blue,),
         ),
       ),
@@ -60,43 +60,43 @@ class _ListFormWidgetBody extends StatelessWidget {
   }
 }
 
-class _ListNameWidget extends StatelessWidget {
-  const _ListNameWidget({Key? key}) : super(key: key);
+class _GroupNameWidget extends StatelessWidget {
+  const _GroupNameWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final model = ListFormWidgetModelProvider.read(context)?.model;
+    final model = GroupFormWidgetModelProvider.read(context)?.model;
     return TextField(
       autofocus: true,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         hintText: 'List name',
       ),
-      onChanged: (value) => model?.listName = value,
-      onEditingComplete: () => model?.saveList(context),
+      onChanged: (value) => model?.groupName = value,
+      onEditingComplete: () => model?.saveGroup(context),
     );
   }
 }
 
-class _ListColorPickerWidget extends StatefulWidget {
-  const _ListColorPickerWidget({Key? key}) : super(key: key);
+class _GroupColorPickerWidget extends StatefulWidget {
+  const _GroupColorPickerWidget({Key? key}) : super(key: key);
 
   @override
-  __ListColorPickerWidgetState createState() => __ListColorPickerWidgetState();
+  __GroupColorPickerWidgetState createState() => __GroupColorPickerWidgetState();
 }
 
-class __ListColorPickerWidgetState extends State<_ListColorPickerWidget> {
+class __GroupColorPickerWidgetState extends State<_GroupColorPickerWidget> {
   late Color selectedColor;
 
   @override
   void initState() {
     super.initState();
-    selectedColor = Colors.white; // Set initial color
+    selectedColor = Colors.white;
   }
 
   @override
   Widget build(BuildContext context) {
-    final model = ListFormWidgetModelProvider.read(context)?.model;
+    final model = GroupFormWidgetModelProvider.read(context)?.model;
     return Column(
       children: [
         Text('Selected Color:'),
@@ -125,7 +125,7 @@ class __ListColorPickerWidgetState extends State<_ListColorPickerWidget> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          model?.listColor = selectedColor; // Set selected color to model
+                          model?.groupColor = selectedColor;
                         },
                         child: Text('Save'),
                       ),

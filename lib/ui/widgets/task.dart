@@ -3,8 +3,16 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo_app_flutter/model/task_widget_model.dart';
 import 'package:todo_app_flutter/ui/extension/app_extension.dart';
 
+class TasksWidgetConfiguration {
+  final int groupKey;
+  final String title;
+
+  TasksWidgetConfiguration(this.groupKey, this.title);
+}
+
 class TasksWidget extends StatefulWidget {
-  const TasksWidget({super.key});
+  final TasksWidgetConfiguration configuration;
+  const TasksWidget({super.key, required this.configuration});
 
   @override
   State<TasksWidget> createState() => _TasksWidgetState();
@@ -22,7 +30,7 @@ class _TasksWidgetState extends State<TasksWidget> {
           .of(context)!
           .settings
           .arguments as int;
-      _model = TasksWidgetModel(listKey: listKey);
+      _model = TasksWidgetModel(configuration: widget.configuration);
     }
   }
 
@@ -36,12 +44,13 @@ class _TasksWidgetState extends State<TasksWidget> {
 }
 
 class TasksWidgetBody extends StatelessWidget {
-  const TasksWidgetBody({super.key});
+  const TasksWidgetBody({Key? key});
 
   @override
   Widget build(BuildContext context) {
     final model = TasksWidgetModelProvider.watch(context)?.model;
-    final title = model?.list?.name ?? 'Tasks';
+    final title = model?.configuration.title ?? 'Tasks';
+    // final backgroundColor = model?.group?.color ?? Colors.white;
     return Scaffold(
       appBar: AppBar(
         title: Text(title.toCapital),
@@ -62,6 +71,7 @@ class TasksWidgetBody extends StatelessWidget {
     );
   }
 }
+
 
 class _TaskListWidget extends StatelessWidget {
   const _TaskListWidget({Key? key}) : super(key: key);

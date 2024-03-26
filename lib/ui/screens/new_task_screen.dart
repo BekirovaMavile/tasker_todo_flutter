@@ -23,9 +23,9 @@ class _TaskFormWidgetState extends State<TaskFormWidget> {
     if (_model == null) {
       final arguments = ModalRoute.of(context)!.settings.arguments;
       if (arguments is int) {
-        _model = TaskFormWidgetModel(listKey: arguments);
+        _model = TaskFormWidgetModel(groupKey: arguments);
       } else {
-        _model = TaskFormWidgetModel(listKey: 0);
+        _model = TaskFormWidgetModel(groupKey: 0);
       }
     }
   }

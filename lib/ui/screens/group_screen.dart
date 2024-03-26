@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_flutter/model/lists_widget_model.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app_flutter/model/groups_widget_model.dart';
+import 'package:todo_app_flutter/model/task_widget_model.dart';
 import 'package:todo_app_flutter/state/todo_state.dart';
 import 'package:todo_app_flutter/ui/extension/app_extension.dart';
 import 'package:todo_app_flutter/ui/widgets/floating_action_button.dart';
-import 'package:todo_app_flutter/ui/widgets/lists.dart';
+import 'package:todo_app_flutter/ui/widgets/group.dart';
 import 'package:todo_app_flutter/ui_kit/_ui_kit.dart';
 import '../../data/_data.dart';
 import '../widgets/coloredDot.dart';
@@ -90,7 +93,7 @@ class _ListScreenState extends State<ListScreen> {
                         style: AppTextStyle.h3Style,
                       ),
                     ),
-                    Lists(
+                    Group(
                         // showCategoryDetails: _showCategoryDetails
                     )
                   ],

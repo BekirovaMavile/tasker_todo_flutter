@@ -1,47 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_app_flutter/model/lists_widget_model.dart';
+import 'package:todo_app_flutter/model/groups_widget_model.dart';
 import 'package:todo_app_flutter/ui/extension/app_extension.dart';
 import '../../data/_data.dart';
 import '../../ui_kit/_ui_kit.dart';
 
-class Lists extends StatefulWidget {
-  Lists({
+class Group extends StatefulWidget {
+  Group({
     Key? key,
   });
 
   @override
-  State<Lists> createState() => _ListsState();
+  State<Group> createState() => _GroupState();
 }
 
-class _ListsState extends State<Lists> {
-  final model = ListWidgetModel();
+class _GroupState extends State<Group> {
+  final model = GroupWidgetModel();
 
   @override
   Widget build(BuildContext context) {
-    return ListWidgetModelProvider(
+    return GroupWidgetModelProvider(
         model: model,
-        child: _ListWidget(
+        child: _GroupWidget(
         ),
     );
   }
 }
 
-class _ListWidget extends StatelessWidget {
-  const _ListWidget({
+class _GroupWidget extends StatelessWidget {
+  const _GroupWidget({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     final groupsCount =
-        ListWidgetModelProvider.watch(context)?.model.list.length ?? 0;
+        GroupWidgetModelProvider.watch(context)?.model.group.length ?? 0;
     return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: groupsCount,
       itemBuilder: (BuildContext context, int index) {
-        return _ListWidgetBody(
+        return _GroupWidgetBody(
             indexInList: index,
         );
       },
@@ -52,8 +52,8 @@ class _ListWidget extends StatelessWidget {
   }
 }
 
-class _ListWidgetBody extends StatelessWidget {
-  const _ListWidgetBody({
+class _GroupWidgetBody extends StatelessWidget {
+  const _GroupWidgetBody({
     Key? key,
     required this.indexInList,
   });
@@ -61,9 +61,9 @@ class _ListWidgetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = ListWidgetModelProvider.read(context)!.model;
-    final lists = model.list[indexInList];
-    final Color? color = lists.color;
+    final model = GroupWidgetModelProvider.read(context)!.model;
+    final groups = model.group[indexInList];
+    final Color? color = groups.color;
     return Slidable(
       actionPane: const SlidableBehindActionPane(),
       secondaryActions: <Widget>[
@@ -72,7 +72,7 @@ class _ListWidgetBody extends StatelessWidget {
           color: Colors.white,
           foregroundColor: Colors.red,
           icon: Icons.delete,
-          onTap: () => model.deleteList(indexInList),
+          onTap: () => model.deleteGroup(indexInList),
         ),
       ],
       child: GestureDetector(
@@ -94,7 +94,7 @@ class _ListWidgetBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(lists.name.toCapital, style: AppTextStyle.h4Style),
+                Text(groups.name.toCapital, style: AppTextStyle.h4Style),
                 FutureBuilder<int>(
                   future: model.getTaskCount(indexInList),
                   builder: (context, snapshot) {

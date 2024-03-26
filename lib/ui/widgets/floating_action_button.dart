@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:todo_app_flutter/ui/screens/new_list_screen.dart';
+import 'package:todo_app_flutter/ui/screens/new_group_screen.dart';
 import 'package:todo_app_flutter/ui/screens/new_task_screen.dart';
 
 class FloatingButton extends StatefulWidget {
@@ -148,7 +148,7 @@ class _FloatingButtonState extends State<FloatingButton>
                 icon: const Icon(Icons.dns),
                 color: const Color(0xFF006CFF),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => ListFormWidget()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => GroupFormWidget()));
                 },
               ),
               const SizedBox(width: 8),
