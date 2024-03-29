@@ -15,16 +15,22 @@ class Group extends StatefulWidget {
 }
 
 class _GroupState extends State<Group> {
-  final model = GroupWidgetModel();
+  final _model = GroupWidgetModel();
 
   @override
   Widget build(BuildContext context) {
     return GroupWidgetModelProvider(
-        model: model,
+        model: _model,
         child: _GroupWidget(
         ),
     );
   }
+
+    @override
+    void dispose() async {
+      await _model.dispose();
+      super.dispose();
+    }
 }
 
 class _GroupWidget extends StatelessWidget {

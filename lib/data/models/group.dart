@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:todo_app_flutter/data/models/task.dart';
 
 part 'group.g.dart';
 
@@ -12,14 +13,14 @@ class Group extends HiveObject{
   @HiveField(1)
   Color? color;
 
-  // @HiveField(2)
-  // HiveList<Task>? tasks;
+  @HiveField(2)
+  HiveList<Task>? tasks;
 
   Group({required this.name, required this.color});
 
-  // void addTask(Box<Task> box, Task task) {
-  //   tasks ??= HiveList(box);
-  //   tasks?.add(task);
-  //   save();
-  // }
+  void addTask(Box<Task> box, Task task) {
+    tasks ??= HiveList(box);
+    tasks?.add(task);
+    save();
+  }
 }

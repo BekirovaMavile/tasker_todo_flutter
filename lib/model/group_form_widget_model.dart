@@ -14,12 +14,13 @@ class GroupFormWidgetModel {
     //   Hive.registerAdapter(GroupAdapter());
     // }
     // final groupBox = await Hive.openBox<Group>('list_box');
-    final groupBox = await BoxManager.instance.openGroupBox();
+    final box = await BoxManager.instance.openGroupBox();
     final group = Group(
       name: groupName,
       color: groupColor,
     );
-    await groupBox.add(group);
+    await box.add(group);
+    await BoxManager.instance.closeBox(box);
     Navigator.of(context).pop();
 
     print(groupName);

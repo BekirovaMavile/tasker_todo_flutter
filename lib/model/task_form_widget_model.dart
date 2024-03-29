@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:todo_app_flutter/data/data_provider/box_manager.dart';
 import '../data/models/group.dart';
 import '../data/models/task.dart';
 
@@ -13,25 +12,20 @@ class TaskFormWidgetModel {
   void saveTask(BuildContext context) async {
     if (taskText.isEmpty) return;
 
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(GroupAdapter());
+    }
+    if (!Hive.isAdapterRegistered(2)) {
+      Hive.registerAdapter(TaskAdapter());
+    }
+    final taskBox = await Hive.openBox<Task>('tasks_box');
     final task = Task(text: taskText, isDone: false);
-    final box = await BoxManager.instance.openTasksBox(groupKey);
-    await box.add(task);
-    Navigator.of(context).pop();
+    await taskBox.add(task);
 
-    // if (!Hive.isAdapterRegistered(1)) {
-    //   Hive.registerAdapter(GroupAdapter());
-    // }
-    // if (!Hive.isAdapterRegistered(2)) {
-    //   Hive.registerAdapter(TaskAdapter());
-    // }
-    // final taskBox = await Hive.openBox<Task>('tasks_box');
-    // final task = Task(text: taskText, isDone: false);
-    // await taskBox.add(task);
-    //
-    // final groupBox = await Hive.openBox<Group>('list_box');
-    // final group = groupBox.get(groupKey);
-    // group?.addTask(taskBox, task);
-    // Navigator.of(context).pop();
+    final groupBox = await Hive.openBox<Group>('list_box');
+    final group = groupBox.get(groupKey);
+    group?.addTask(taskBox, task);
+    Navigator.of(context).pop();
   }
 }
 
