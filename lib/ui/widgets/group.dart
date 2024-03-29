@@ -26,11 +26,11 @@ class _GroupState extends State<Group> {
     );
   }
 
-    @override
-    void dispose() async {
-      await _model.dispose();
-      super.dispose();
-    }
+    // @override
+    // void dispose() async {
+    //   await _model.dispose();
+    //   super.dispose();
+    // }
 }
 
 class _GroupWidget extends StatelessWidget {
@@ -67,9 +67,15 @@ class _GroupWidgetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = GroupWidgetModelProvider.read(context)!.model;
-    final groups = model.group[indexInList];
-    final Color? color = groups.color;
+    print("12");
+    final model = GroupWidgetModelProvider.read(context)?.model;
+    print(model?.group.length);
+    if (model!.group.isEmpty) {
+      return Text("упс");
+    }
+    final groups = model?.group[indexInList];
+
+    final Color? color = groups?.color;
     return Slidable(
       actionPane: const SlidableBehindActionPane(),
       secondaryActions: <Widget>[
@@ -85,6 +91,7 @@ class _GroupWidgetBody extends StatelessWidget {
         onTap: () => model.showTasks(context, indexInList),
         child: Container(
           margin: EdgeInsets.all(8),
+          // width: 80,
           width: MediaQuery
               .of(context)
               .size
@@ -100,7 +107,7 @@ class _GroupWidgetBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(groups.name.toCapital, style: AppTextStyle.h4Style),
+                Text(groups!.name.toCapital, style: AppTextStyle.h4Style),
                 FutureBuilder<int>(
                   future: model.getTaskCount(indexInList),
                   builder: (context, snapshot) {

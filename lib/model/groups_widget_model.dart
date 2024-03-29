@@ -10,7 +10,7 @@ import '../data/_data.dart';
 
 class GroupWidgetModel extends ChangeNotifier{
   late final Future<Box<Group>> _box;
-  ValueListenable<Object>? _listenableBox;
+  // ValueListenable<Object>? _listenableBox;
   var _group = <Group>[];
   List<Group> get group => _group.toList();
 
@@ -54,6 +54,8 @@ class GroupWidgetModel extends ChangeNotifier{
     // final box = await BoxManager.instance.openGroupBox();
     await box.getAt(groupIndex)?.tasks?.deleteAllFromHive();
     await box.deleteAt(groupIndex);
+
+    // await box.deleteFromDisk();
   }
 
   Future<void> _readListsFromHive() async {
@@ -74,16 +76,17 @@ class GroupWidgetModel extends ChangeNotifier{
     // await Hive.openBox<Task>('tasks_box');
     await BoxManager.instance.openTaskBox();
     await _readListsFromHive();
-    _listenableBox = (await _box).listenable();
-    _listenableBox?.addListener(_readListsFromHive);
-  }
+    // _listenableBox = (await _box).listenable();
+    (await _box).listenable().addListener(_readListsFromHive);
 
-  @override
-  Future<void> dispose() async {
-    _listenableBox?.removeListener(_readListsFromHive);
-    await BoxManager.instance.closeBox((await _box));
-    super.dispose();
   }
+  //
+  // @override
+  // Future<void> dispose() async {
+  //   _listenableBox?.removeListener(_readListsFromHive);
+  //   await BoxManager.instance.closeBox((await _box));
+  //   super.dispose();
+  // }
 }
 
 class GroupWidgetModelProvider extends InheritedNotifier {

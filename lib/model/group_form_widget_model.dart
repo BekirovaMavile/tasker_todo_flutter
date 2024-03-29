@@ -20,7 +20,7 @@ class GroupFormWidgetModel {
       color: groupColor,
     );
     await box.add(group);
-    await BoxManager.instance.closeBox(box);
+    // await BoxManager.instance.closeBox(box);
     Navigator.of(context).pop();
 
     print(groupName);
