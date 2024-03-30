@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:todo_app_flutter/data/data_provider/box_manager.dart';
+import 'package:hive_flutter/adapters.dart';
 import '../data/models/group.dart';
 
 class GroupFormWidgetModel {
@@ -10,17 +10,15 @@ class GroupFormWidgetModel {
   void saveGroup(BuildContext context) async {
     if (groupName.isEmpty || groupColor == null) return;
 
-    // if (!Hive.isAdapterRegistered(1)) {
-    //   Hive.registerAdapter(GroupAdapter());
-    // }
-    // final groupBox = await Hive.openBox<Group>('list_box');
-    final box = await BoxManager.instance.openGroupBox();
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(GroupAdapter());
+    }
+    final groupBox = await Hive.openBox<Group>('list_box');
     final group = Group(
       name: groupName,
       color: groupColor,
     );
-    await box.add(group);
-    // await BoxManager.instance.closeBox(box);
+    await groupBox.add(group);
     Navigator.of(context).pop();
 
     print(groupName);
@@ -30,6 +28,7 @@ class GroupFormWidgetModel {
 
 class GroupFormWidgetModelProvider extends InheritedWidget {
   final GroupFormWidgetModel model;
+
   const GroupFormWidgetModelProvider({
     Key? key,
     required this.model,
@@ -45,7 +44,6 @@ class GroupFormWidgetModelProvider extends InheritedWidget {
   }
 
   static GroupFormWidgetModelProvider? read(BuildContext context) {
-    print("read");
     final widget = context
         .getElementForInheritedWidgetOfExactType<GroupFormWidgetModelProvider>()
         ?.widget;

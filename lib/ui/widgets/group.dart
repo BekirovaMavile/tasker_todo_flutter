@@ -67,15 +67,10 @@ class _GroupWidgetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("12");
-    final model = GroupWidgetModelProvider.read(context)?.model;
-    print(model?.group.length);
-    if (model!.group.isEmpty) {
-      return Text("упс");
-    }
-    final groups = model?.group[indexInList];
+    final model = GroupWidgetModelProvider.read(context)!.model;
+    final groups = model.group[indexInList];
 
-    final Color? color = groups?.color;
+    final Color? color = groups.color;
     return Slidable(
       actionPane: const SlidableBehindActionPane(),
       secondaryActions: <Widget>[
