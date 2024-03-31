@@ -62,14 +62,12 @@ class GroupWidgetModel extends ChangeNotifier{
       Hive.registerAdapter(GroupAdapter());
     }
     final box = await Hive.openBox<Group>('list_box');
+    // Hive.box('list_box').clear();
     if (!Hive.isAdapterRegistered(2)) {
       Hive.registerAdapter(TaskAdapter());
     }
     await Hive.openBox<Task>('tasks_box');
-    // if (!Hive.isAdapterRegistered(3)) {
-    //   Hive.registerAdapter(ColorAdapter());
-    // }
-
+    // Hive.box('tasks_box').clear();
     _readGroupFromHive(box);
     box.listenable().addListener(() => _readGroupFromHive(box));
   }

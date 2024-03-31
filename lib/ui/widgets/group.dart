@@ -102,7 +102,7 @@ class _GroupWidgetBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(groups!.name.toCapital, style: AppTextStyle.h4Style),
+                Text(groups.name.toCapital, style: AppTextStyle.h4Style),
                 FutureBuilder<int>(
                   future: model.getTaskCount(indexInList),
                   builder: (context, snapshot) {

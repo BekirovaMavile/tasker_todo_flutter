@@ -5,6 +5,7 @@ import 'package:todo_app_flutter/model/groups_widget_model.dart';
 import 'package:todo_app_flutter/model/task_widget_model.dart';
 import 'package:todo_app_flutter/state/todo_state.dart';
 import 'package:todo_app_flutter/ui/extension/app_extension.dart';
+import 'package:todo_app_flutter/ui/screens/profile_screen.dart';
 import 'package:todo_app_flutter/ui/widgets/floating_action_button.dart';
 import 'package:todo_app_flutter/ui/widgets/group.dart';
 import 'package:todo_app_flutter/ui_kit/_ui_kit.dart';
@@ -86,13 +87,13 @@ class _ListScreenState extends State<ListScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30),
-                      child: Text(
-                        "Lists",
-                        style: AppTextStyle.h3Style,
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 30),
+                    //   child: Text(
+                    //     "Lists",
+                    //     style: AppTextStyle.h3Style,
+                    //   ),
+                    // ),
                     Group(
                         // showCategoryDetails: _showCategoryDetails
                     )
@@ -116,18 +117,36 @@ class _ListScreenState extends State<ListScreen> {
           Row(
             children: [
               Text(
-                "Today",
+                "Group",
                 style: AppTextStyle.h1Style,
               ),
             ],
           ),
-          const Icon(
-            Icons.more_horiz,
-            color: LightThemeColor.blue,
-            size: 34,
+          PopupMenuButton(
+            icon: Icon(
+              Icons.more_horiz,
+              color: LightThemeColor.blue,
+              size: 34,
+            ),
+            itemBuilder: (BuildContext context) {
+              return <PopupMenuEntry>[
+                PopupMenuItem(
+                  child: ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text('Профиль'),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProfilePage()));
+                    },
+                  ),
+                ),
+              ];
+            },
           ),
         ],
       ),
     );
   }
+
 }
