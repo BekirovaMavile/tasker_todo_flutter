@@ -5,7 +5,7 @@ import 'package:todo_app_flutter/model/groups_widget_model.dart';
 import 'package:todo_app_flutter/model/task_widget_model.dart';
 import 'package:todo_app_flutter/state/todo_state.dart';
 import 'package:todo_app_flutter/ui/extension/app_extension.dart';
-import 'package:todo_app_flutter/ui/screens/profile_screen.dart';
+import 'package:todo_app_flutter/ui/screens/settings_screen.dart';
 import 'package:todo_app_flutter/ui/widgets/floating_action_button.dart';
 import 'package:todo_app_flutter/ui/widgets/group.dart';
 import 'package:todo_app_flutter/ui_kit/_ui_kit.dart';
@@ -20,7 +20,6 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,9 +93,7 @@ class _ListScreenState extends State<ListScreen> {
                     //     style: AppTextStyle.h3Style,
                     //   ),
                     // ),
-                    Group(
-                        // showCategoryDetails: _showCategoryDetails
-                    )
+                    Group(),
                   ],
                 ),
               ),
@@ -132,21 +129,35 @@ class _ListScreenState extends State<ListScreen> {
               return <PopupMenuEntry>[
                 PopupMenuItem(
                   child: ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text('Профиль'),
+                    leading: Icon(Icons.settings, color: Colors.black),
+                    title: Text(
+                      'Settings',
+                      style: TextStyle(color: Colors.black),
+                    ),
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ProfilePage()));
+                        context,
+                        MaterialPageRoute(builder: (context) => SettingsPage()),
+                      );
                     },
+                  ),
+                ),
+                PopupMenuItem(
+                  child: ListTile(
+                    leading: Icon(Icons.logout, color: Colors.black),
+                    title: Text(
+                      'Logout',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    onTap: () {},
                   ),
                 ),
               ];
             },
-          ),
+            color: Colors.white,
+          )
         ],
       ),
     );
   }
-
 }
